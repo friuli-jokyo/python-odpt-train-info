@@ -86,4 +86,4 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
                 if key in single_dict:
                     single_dict[key] = { "ja": single_dict[key] }
 
-    return [TrainInformation(single_dict) for single_dict in json_dict]
+    return TrainInformation.from_list(json_dict)

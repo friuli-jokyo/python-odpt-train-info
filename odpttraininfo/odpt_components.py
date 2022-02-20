@@ -31,6 +31,13 @@ class MultiLanguageString():
         if "zh-Hant" in dic: self.zh_hant = dic["zh-Hant"]
         if "ja-Hrkt" in dic: self.ja_hrkt = dic["ja-Hrkt"]
 
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, type(self)):
+            return self.to_dict() == __o.to_dict()
+        if __o == None:
+            return False
+        raise NotImplementedError
+
     def to_dict(self) -> dict[str,str]:
         result:dict[str,str] = {}
         result["ja"] = self.ja
@@ -141,7 +148,7 @@ class TrainInformation():
     transfer_railways: Optional[list[str]] = None
     resume_estimate: Optional[datetime] = None
 
-    def __init__(self, dic:TrainInformation_jsondict) -> None:
+    def __init__(self, dic:TrainInformation_jsondict|dict[str,object]) -> None:
 
         for key in dic:
             if key in _TrainInfo_key2attribute:
@@ -175,11 +182,36 @@ class TrainInformation():
             else:
                 raise RuntimeWarning("Dictionary has unknown key '%s'." % key)
 
+    def __eq__(self, __o: object) -> bool:
+        if isinstance(__o, type(self)):
+            for attribute in _TrainInfo_attribute2key.keys():
+                if attribute in ["id","date","valid","time_of_origin"]:
+                    continue
+                if self.__getattribute__(attribute) != __o.__getattribute__(attribute):
+                    return False
+            return True
+        if __o == None:
+            return False
+        raise NotImplementedError
+
     @classmethod
-    def from_json_to_list(cls, string:str) -> list[TrainInformation]:
+    def from_jsonlist(cls, string:str) -> list[TrainInformation]:
 
         dic = json.loads(string)
-        return [ TrainInformation(single) for single in dic ]
+        return cls.from_list(dic)
+
+    @classmethod
+    def from_list(cls, list_: list[dict[str,object]|TrainInformation_jsondict]) -> list[TrainInformation]:
+
+        return [TrainInformation(single) for single in list_]
+
+    @classmethod
+    def list_diff(cls, new: list[TrainInformation], old: list[TrainInformation]) -> tuple[list[TrainInformation], list[TrainInformation]]:
+
+        added = [info_new for info_new in new if info_new not in old]
+        removed = [info_old for info_old in old if info_old not in new]
+
+        return added, removed
 
     def to_dict(self) -> dict[str,object]:
 

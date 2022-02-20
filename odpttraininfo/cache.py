@@ -56,7 +56,7 @@ def _load(distributor: Distributor, expire_second: int = 40) -> list[TrainInform
 
     try:
         with open(cache_path, encoding='utf-8') as loadedCacheJSON:
-            return TrainInformation.from_json_to_list(loadedCacheJSON.read())
+            return TrainInformation.from_jsonlist(loadedCacheJSON.read())
     except FileNotFoundError:
         return None
 
