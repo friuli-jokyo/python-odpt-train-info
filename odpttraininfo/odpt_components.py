@@ -189,6 +189,9 @@ class TrainInformation():
             key = _TrainInfo_attribute2key[attribute]
             value = self.__getattribute__(attribute)
             if output_with_none or value != None:
+                if isinstance(value, MultiLanguageString):
+                    result[key] = value.to_dict()
+                    continue
                 result[key] = value
 
         return result
