@@ -1,13 +1,14 @@
 import json
 import time
+import urllib.parse
+import urllib.request
 from urllib.error import HTTPError
 
-import urllib.request
-import urllib.parse
-
-from .errors import Forbidden, InvalidConsumerKeyError, InvalidParameterError, NotFound, OdptServerError, UnknownHTTPError
-
-from .odpt_components import TrainInformation_jsondict, Distributor, TrainInformation, multilanguage_str_keys
+from .errors import (Forbidden, InvalidConsumerKeyError, InvalidParameterError,
+                     NotFound, OdptServerError, UnknownHTTPError)
+from .odpt_components import (Distributor, TrainInformation,
+                              TrainInformation_jsondict,
+                              multilanguage_str_keys)
 
 
 def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation]|None:
