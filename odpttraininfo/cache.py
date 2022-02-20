@@ -100,7 +100,7 @@ def refresh_cache() -> None:
         if _load(distributor=distributor, expire_second=40) in [None, {}]:
             _set(distributor=distributor, max_try=4)
 
-def fetch_info(max_try:int = 1) -> list[TrainInformation]:
+def fetch_info(only_abnormal:bool = False, max_try:int = 1) -> list[TrainInformation]:
     """Load and Concat train information.
 
     Information are loaded from cache basically.
@@ -111,6 +111,8 @@ def fetch_info(max_try:int = 1) -> list[TrainInformation]:
 
     Parameters
     ----------
+    only_abnormal : bool, optional
+        If True, all return value have abnormal information such as delay.
     max_try : int, optional
         Try to download information up to max_try times, by default 1
 
@@ -144,4 +146,7 @@ def fetch_info(max_try:int = 1) -> list[TrainInformation]:
         else:
             raise TooOldCacheError
 
-    return result
+    if only_abnormal:
+        return [ single for single in result if single.train_information_status ]
+    else:
+        return result
