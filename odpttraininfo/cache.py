@@ -3,7 +3,7 @@ import json
 import os
 from .errors import TooOldCacheError
 from .odpt_client import download
-from .odpt_components import Distributor, TrainInformation
+from .odpt_components import Distributor, TrainInformation, to_json_default
 
 
 _JST = timezone(timedelta(hours=+9), 'JST')
@@ -56,7 +56,7 @@ def _load(distributor: Distributor, expire_second: int = 40) -> list[TrainInform
 
     try:
         with open(cache_path, encoding='utf-8') as loadedCacheJSON:
-            return json.load(loadedCacheJSON)
+            return TrainInformation.from_json_to_list(loadedCacheJSON.read())
     except FileNotFoundError:
         return None
 
@@ -86,7 +86,7 @@ def _set(distributor: Distributor, max_try : int) -> list[TrainInformation]|None
         os.makedirs(_cache_dir, exist_ok=True)
 
         with open(cache_path, "w", encoding='utf-8') as saveCacheJSON:
-            saveCacheJSON.write(json.dumps(get_dict,ensure_ascii=False))
+            saveCacheJSON.write(json.dumps(get_dict,ensure_ascii=False,default=to_json_default))
 
         return get_dict
 

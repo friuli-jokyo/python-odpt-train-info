@@ -7,7 +7,7 @@ import urllib.parse
 
 from .errors import Forbidden, InvalidConsumerKeyError, InvalidParameterError, NotFound, OdptServerError, UnknownHTTPError
 
-from .odpt_components import Distributor, TrainInformation, multilanguage_str_keys
+from .odpt_components import TrainInformation_jsondict, Distributor, TrainInformation, multilanguage_str_keys
 
 
 def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation]|None:
@@ -51,7 +51,7 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
     if distributor == Distributor.TOKYO_METRO:
         query["rdf:type"] = "odpt:TrainInformation"
 
-    json_dict:list[TrainInformation] = []
+    json_dict:list[TrainInformation_jsondict] = []
 
     for try_count in range(max_try):
         try:
@@ -81,9 +81,9 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
     # Tokyo Metro open data don't suppert multi-language text.
     # So move these information to "ja".
     if distributor == Distributor.TOKYO_METRO:
-        for single_info in json_dict:
+        for single_dict in json_dict:
             for key in multilanguage_str_keys:
-                if key in single_info:
-                    single_info[key] = { "ja": single_info[key] }
+                if key in single_dict:
+                    single_dict[key] = { "ja": single_dict[key] }
 
-    return json_dict
+    return [TrainInformation(single_dict) for single_dict in json_dict]

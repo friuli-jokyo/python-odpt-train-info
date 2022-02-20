@@ -36,22 +36,28 @@ pip install git+https://github.com/friuli-jokyo/python-odpt-train-info
 # キャッシュから運行情報を取得
 # キャッシュが生成から80秒以上経っているときはインターネットリソースから取得
 >>> info = odpt.fetch_info()
->>> print(info)
-[
-    {
-        "@id": "urn:uuid:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-        "@type": "odpt:TrainInformation",
-        "dc:date": "0000-00-00T00:00:00+09:00",
-        "@context": "http://vocab.odpt.org/context_odpt.jsonld",
-        "dct:valid": "0000-00-00T00:00:00+09:00",
-        "owl:sameAs": "odpt.TrainInformation:TWR.Rinkai",
-        "odpt:railway": "odpt.Railway:TWR.Rinkai",
-        "odpt:operator": "odpt.Operator:TWR",
-        "odpt:trainInformationText": {
-            "ja": "平常通り運転しています。"
-        }
-    }, ...
-]
+>>> print(info[0].to_json(indent=4))
+{
+    "@id": "urn:uuid:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "@type": "odpt:TrainInformation",
+    "dc:date": "0000-00-00T00:00:00+09:00",
+    "@context": "http://vocab.odpt.org/context_odpt.jsonld",
+    "dct:valid": "0000-00-00T00:00:00+09:00",
+    "owl:sameAs": "odpt.TrainInformation:TWR.Rinkai",
+    "odpt:railway": "odpt.Railway:TWR.Rinkai",
+    "odpt:operator": "odpt.Operator:TWR",
+    "odpt:trainInformationText": {
+        "ja": "平常通り運転しています。"
+    }
+}
+>>> print(info[0].train_information_text.ja)
+平常通り運転しています。
+>>> print(info[0].train_information_status)
+None
+
+# 時刻とUUIDはオブジェクトとして格納されます
+>>> print(info[0].date.date())
+000-00-00
 ```
 
 ## Important Notes
