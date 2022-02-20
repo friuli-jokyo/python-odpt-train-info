@@ -24,7 +24,7 @@ pip install git+https://github.com/friuli-jokyo/python-odpt-train-info
 >>> import odpttraininfo as odpt
 
 # キャッシュの保存先を指定(デフォルトは"./__odptcache__/")
->>> odpt.set_cache_dir("./path/to/cache/directory/")
+>>> odpt.config.set_cache_dir("./path/to/cache/directory/")
 
 # 各サービスへのconsumerKeyをセット
 >>> odpt.Distributor.ODPT_CENTER.set_consumer_key("xxxxxxxxxxxx")
