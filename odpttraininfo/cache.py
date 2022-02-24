@@ -97,6 +97,8 @@ def refresh_cache() -> None:
     """
 
     for distributor in Distributor:
+        if not distributor.is_valid():
+            continue
         if _load(distributor=distributor, expire_second=40) in [None, {}]:
             _set(distributor=distributor, max_try=4)
 
@@ -130,6 +132,8 @@ def fetch_info(only_abnormal:bool = False, max_try:int = 1) -> list[TrainInforma
     result: list[TrainInformation] = []
 
     for distributor in Distributor:
+        if not distributor.is_valid():
+            continue
         cache = _load(distributor=distributor, expire_second=80)
         if cache != None:
             result += cache
