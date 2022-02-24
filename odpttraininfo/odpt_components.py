@@ -23,8 +23,14 @@ class MultiLanguageString():
     ja_hrkt: Optional[str] = None
     """Japanese Hiragana/Katakana (no kanji)"""
 
-    def __init__(self, dic:dict[str,str]) -> None:
-        self.ja = dic["ja"]
+    def __init__(self, dic:dict[str,str]|None = None) -> None:
+        if not dic:
+            self.ja = ""
+            return
+        if "ja" in dic:
+            self.ja = dic["ja"]
+        else:
+            self.ja = ""
         if "en" in dic: self.en = dic["en"]
         if "ko" in dic: self.ko = dic["ko"]
         if "zh-Hans" in dic: self.zh_hans = dic["zh-Hans"]
