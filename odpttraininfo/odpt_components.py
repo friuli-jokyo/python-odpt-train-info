@@ -8,6 +8,21 @@ from uuid import UUID
 
 output_with_none: bool = False
 
+_MultiLanguageDictRequired = TypedDict("_MultiLanguageDictRequired", {
+    "ja": str,
+})
+
+_MultiLanguageDictOptional = TypedDict("_MultiLanguageDictOptional", {
+    "en": Optional[str],
+    "ko": Optional[str],
+    "zh-Hans": Optional[str],
+    "zh-Hant": Optional[str],
+    "ja-Hrkt": Optional[str],
+}, total=False)
+
+class MultiLanguageDict(_MultiLanguageDictRequired,_MultiLanguageDictOptional):
+    pass
+
 class MultiLanguageString():
 
     ja: str
@@ -44,9 +59,10 @@ class MultiLanguageString():
             return False
         raise NotImplementedError
 
-    def to_dict(self) -> dict[str,str]:
-        result:dict[str,str] = {}
-        result["ja"] = self.ja
+    def to_dict(self) -> MultiLanguageDict:
+        result:MultiLanguageDict = {
+            "ja": self.ja
+        }
         if self.en: result["en"] = self.en
         if self.ko: result["ko"] = self.ko
         if self.zh_hans: result["zh-Hans"] = self.zh_hans
