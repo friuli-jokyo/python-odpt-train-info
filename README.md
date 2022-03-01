@@ -8,6 +8,7 @@ ODPT形式で提供される鉄道運行情報を集約して提供するモジ�
 
 - 公共交通オープンデータセンター https://developer.odpt.org/ja/info
 - 東京メトロオープンデータ https://developer.tokyometroapp.jp/
+  - 東京メトロの運行情報は全て公共交通オープンデータセンターで取得できるので、東京メトロオープンデータを使用する必要はありません。
 
 ## Installation
 
@@ -26,9 +27,8 @@ pip install git+https://github.com/friuli-jokyo/python-odpt-train-info
 # キャッシュの保存先を指定(デフォルトは"./__odptcache__/")
 >>> odpt.config.set_cache_dir("./path/to/cache/directory/")
 
-# 各サービスへのconsumerKeyをセット
+# 公共交通オープンデータセンターのconsumerKeyをセット
 >>> odpt.Distributor.ODPT_CENTER.set_consumer_key("xxxxxxxxxxxx")
->>> odpt.Distributor.TOKYO_METRO.set_consumer_key("xxxxxxxxxxxx")
 
 # キャッシュファイルを更新
 >>> odpt.refresh_cache()
