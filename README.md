@@ -6,8 +6,8 @@ ODPT形式で提供される鉄道運行情報を集約して提供するモジ�
 
 ## Support APIs
 
-公共交通オープンデータセンター https://developer.odpt.org/ja/info<br>
-東京メトロオープンデータ https://developer.tokyometroapp.jp/
+- 公共交通オープンデータセンター https://developer.odpt.org/ja/info
+- 東京メトロオープンデータ https://developer.tokyometroapp.jp/
 
 ## Installation
 
