@@ -308,7 +308,6 @@ class Distributor(Enum):
         Value is an endpoint URL.
     """
 
-    TOKYO_METRO = ("https://api.tokyometroapp.jp/api/v2/datapoints")
     ODPT_CENTER = ("https://api.odpt.org/api/v4/odpt:TrainInformation")
 
     def __init__(self, URL:str) -> None:

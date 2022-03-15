@@ -7,8 +7,6 @@ ODPT形式で提供される鉄道運行情報を集約して提供するモジ�
 ## Support APIs
 
 - 公共交通オープンデータセンター https://developer.odpt.org/ja/info
-- 東京メトロオープンデータ https://developer.tokyometroapp.jp/
-  - 東京メトロの運行情報は全て公共交通オープンデータセンターで取得できるので、東京メトロオープンデータを使用する必要はありません。
 
 ## Installation
 
@@ -58,47 +56,6 @@ None
 # 時刻とUUIDはオブジェクトとして格納されます
 >>> print(info[0].date.date())
 000-00-00
-```
-
-## Important Notes
-
-公共交通オープンデータセンターからの情報において他言語に対応しているキー(`odpt:trainInformationText`,`odpt:trainInformationStatus`など)は、東京メトロオープンデータにおいて日本語テキストのみ配信されていますが、後者をキー`ja`に移動しています。以下に例を示しています。
-
-Some keys of data (which have multi-language expression at ODPT-center, e.g.`odpt:trainInformationText`,`odpt:trainInformationStatus`) only have Japanese text at Tokyo Metro open data, so these data are moved to key `ja`. An example is below.
-
-
-東京メトロオープンデータから配信される生のデータ例
-Example raw data from Tokyo Metro Open data.
-```json
-{
-    "@context": "http://vocab.tokyometroapp.jp/context_odpt_TrainInformation.json",
-    "@id": "urn:ucode:_00000000000000000000000000000000",
-    "dc:date": "0000-00-00T00:00:00+00:00",
-    "dct:valid": "0000-00-00T00:00:00+00:00",
-    "odpt:operator": "odpt.Operator:TokyoMetro",
-    "odpt:railway": "odpt.Railway:TokyoMetro.Fukutoshin",
-    "odpt:timeOfOrigin": "0000-00-00T00:00:00+00:00",
-    "odpt:trainInformationText": "現在、平常どおり運転しています。",
-    "@type": "odpt:TrainInformation"
-}
-```
-
-当ライブラリで取得できるデータ例
-Example data from this library.
-```json
-{
-    "@context": "http://vocab.tokyometroapp.jp/context_odpt_TrainInformation.json",
-    "@id": "urn:ucode:_00000000000000000000000000000000",
-    "dc:date": "0000-00-00T00:00:00+00:00",
-    "dct:valid": "0000-00-00T00:00:00+00:00",
-    "odpt:operator": "odpt.Operator:TokyoMetro",
-    "odpt:railway": "odpt.Railway:TokyoMetro.Fukutoshin",
-    "odpt:timeOfOrigin": "0000-00-00T00:00:00+00:00",
-    "odpt:trainInformationText":{
-        "ja": "現在、平常どおり運転しています。"
-    },
-    "@type": "odpt:TrainInformation"
-}
 ```
 
 ## License
