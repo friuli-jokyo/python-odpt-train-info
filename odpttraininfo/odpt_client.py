@@ -4,6 +4,8 @@ import urllib.parse
 import urllib.request
 from urllib.error import HTTPError
 
+from json.decoder import JSONDecodeError
+
 from .errors import (Forbidden, InvalidConsumerKeyError, InvalidParameterError,
                      NotFound, OdptServerError, UnknownHTTPError)
 from .odpt_components import (Distributor, TrainInformation,
@@ -60,6 +62,12 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
                 json_text = f.read().decode("utf-8")
             json_dict = json.loads(json_text)
             break
+        except JSONDecodeError as e:
+            if try_count == max_try-1:
+                raise
+            else:
+                time.sleep(1+try_count)
+                continue
         except HTTPError as e:
             match e.code:
                 case 400:
