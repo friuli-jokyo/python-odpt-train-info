@@ -51,8 +51,6 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
 
     query = {}
     query["acl:consumerKey"] = distributor.consumer_key
-    if distributor == Distributor.TOKYO_METRO:
-        query["rdf:type"] = "odpt:TrainInformation"
 
     json_dict:list[TrainInformation_jsondict] = []
 
@@ -86,13 +84,5 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
                         continue
                 case _:
                     raise UnknownHTTPError(e)
-
-    # Tokyo Metro open data don't suppert multi-language text.
-    # So move these information to "ja".
-    if distributor == Distributor.TOKYO_METRO:
-        for single_dict in json_dict:
-            for key in multilanguage_str_keys:
-                if key in single_dict:
-                    single_dict[key] = { "ja": single_dict[key] }
 
     return TrainInformation.from_list(json_dict)
