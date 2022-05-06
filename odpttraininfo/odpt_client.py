@@ -8,8 +8,7 @@ from urllib.error import HTTPError
 from .errors import (Forbidden, InvalidConsumerKeyError, InvalidParameterError,
                      NotFound, OdptServerError, UnknownHTTPError)
 from .odpt_components import (Distributor, TrainInformation,
-                              TrainInformation_jsondict,
-                              multilanguage_str_keys)
+                              TrainInformation_jsondict)
 
 
 def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation]|None:
