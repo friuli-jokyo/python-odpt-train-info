@@ -55,8 +55,6 @@ class MultiLanguageString():
     def __eq__(self, __o: object) -> bool:
         if isinstance(__o, type(self)):
             return self.to_dict() == __o.to_dict()
-        if __o == None:
-            return False
         raise NotImplementedError
 
     def to_dict(self) -> MultiLanguageDict:
@@ -212,8 +210,6 @@ class TrainInformation():
                 if self.__getattribute__(attribute) != __o.__getattribute__(attribute):
                     return False
             return True
-        if __o == None:
-            return False
         raise NotImplementedError
 
     @classmethod
