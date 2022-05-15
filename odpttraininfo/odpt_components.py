@@ -221,7 +221,7 @@ class TrainInformation():
         return cls.from_list(dic)
 
     @classmethod
-    def from_list(cls, list_: list[dict[str,object]|TrainInformation_jsondict]) -> list[TrainInformation]:
+    def from_list(cls, list_: list[dict[str,object]]|list[TrainInformation_jsondict]) -> list[TrainInformation]:
 
         return [TrainInformation(single) for single in list_]
 
