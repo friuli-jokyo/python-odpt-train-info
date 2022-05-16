@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from enum import Enum
+import os
 from typing import Optional, TypedDict
 from uuid import UUID
 
@@ -309,8 +310,15 @@ class Distributor(Enum):
     ODPT_CENTER = ("https://api.odpt.org/api/v4/odpt:TrainInformation")
 
     def __init__(self, URL:str) -> None:
+
+        try:
+            from dotenv import load_dotenv # type: ignore
+            load_dotenv()
+        except ImportError:
+            pass
+
         self.URL = URL
-        self.consumer_key: str|None = None
+        self.consumer_key: str|None = os.getenv(self.name+"_TOKEN", None)
 
     def set_consumer_key(self, key: str) -> None:
         """Set consumerKey

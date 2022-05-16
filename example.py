@@ -3,8 +3,8 @@ import odpttraininfo as odpt
 # キャッシュの保存先を指定(デフォルトは"./__odptcache__/")
 odpt.config.set_cache_dir("./path/to/cache/directory/")
 
-# 公共交通オープンデータセンターのconsumerKeyをセット
-odpt.Distributor.ODPT_CENTER.set_consumer_key("xxxxxxxxxxxx")
+# 公共交通オープンデータセンターのconsumerKeyをセット(.env等を用いて環境変数"ODPT_CENTER_TOKEN"を設定すればここでセットする必要はありません)
+# odpt.Distributor.ODPT_CENTER.set_consumer_key("xxxxxxxxxxxx")
 
 # キャッシュファイルを更新
 odpt.refresh_cache()
