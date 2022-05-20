@@ -55,8 +55,7 @@ def download(distributor: Distributor, max_try:int = 4) -> list[TrainInformation
     for try_count in range(max_try):
         try:
             with urllib.request.urlopen("%s?%s" % (distributor.URL, urllib.parse.urlencode(query))) as f:
-                json_text = f.read().decode("utf-8")
-            json_dict = json.loads(json_text)
+                json_dict = json.load(f)
             break
         except HTTPError as e:
             match e.code:
